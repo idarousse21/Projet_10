@@ -22,7 +22,6 @@ from project.views import ProjectView, ContributorView, IssueView, CommentView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
-    TokenRefreshView,
 )
 
 router = routers.SimpleRouter()
@@ -47,5 +46,4 @@ urlpatterns = [
     path("", include(contributor_router.urls)),
     path("", include(issues_router.urls)),
     path("", include(comments_router.urls)),
-
 ]

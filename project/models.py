@@ -35,9 +35,13 @@ CHOICES_STATUS = [
 
 class Project(models.Model):
     title = models.CharField(max_length=25)
-    description = models.CharField(max_length=5000,)
+    description = models.CharField(
+        max_length=5000,
+    )
     type = models.CharField(max_length=25, choices=CHOICES_TYPES)
-    author = models.ForeignKey(to=settings.AUTH_USER_MODEL,on_delete=models.SET_NULL, null=True) 
+    author = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True
+    )
 
 
 class Contributor(models.Model):
@@ -49,19 +53,31 @@ class Contributor(models.Model):
 class Issue(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=25)
-    description = models.CharField(max_length=5000,)
+    description = models.CharField(
+        max_length=5000,
+    )
     tag = models.CharField(max_length=25, choices=CHOICES_TAG)
     priority = models.CharField(max_length=25, choices=CHOICES_PRIORITY)
     project = models.ForeignKey(to=Project, on_delete=models.CASCADE)
     status = models.CharField(max_length=25, choices=CHOICES_STATUS)
     author = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,on_delete=models.SET_NULL, null=True, related_name="author")
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="author",
+    )
     assignee = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL,on_delete=models.SET_NULL, null=True, related_name="assignee")
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="assignee",
+    )
 
 
 class Comment(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=500)
-    author = models.ForeignKey(to=settings.AUTH_USER_MODEL,on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True
+    )
     issue = models.ForeignKey(to=Issue, on_delete=models.CASCADE)

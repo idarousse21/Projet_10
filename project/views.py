@@ -1,8 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import CreateAPIView
-from rest_framework.response import Response
-from django.shortcuts import redirect
-from django.conf import settings
+from rest_framework.permissions import IsAuthenticated
 from .models import Project, Contributor, Issue, Comment
 from .serializers import (
     ProjectSerializer,
@@ -10,28 +7,47 @@ from .serializers import (
     IssueSerializer,
     CommentSerializer,
 )
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
+from .permissions import (
+    ProjectPermission,
+    ContributorAndIssuePermissions,
+    CommentPermission,
+)
+from django.db.models import Q
+
 
 class ProjectView(ModelViewSet):
-    queryset = Project.objects.all()
+    permission_classes = [IsAuthenticated & ProjectPermission]
     serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        projects = Project.objects.filter(
+            Q(contributor__user=self.request.user) | Q(author=self.request.user)
+        )
+        return projects
 
-    
 
 class ContributorView(ModelViewSet):
-    queryset = Contributor.objects.all()
+    permission_classes = [IsAuthenticated, ContributorAndIssuePermissions]
     serializer_class = ContributorSerializer
 
-    
+    def get_queryset(self):
+        contributors = Contributor.objects.filter(project=self.kwargs["projects_pk"])
+        return contributors
+
 
 class IssueView(ModelViewSet):
-    queryset = Issue.objects.all()
+    permission_classes = [IsAuthenticated, ContributorAndIssuePermissions]
     serializer_class = IssueSerializer
+
+    def get_queryset(self):
+        issues = Issue.objects.filter(project=self.kwargs["projects_pk"])
+        return issues
 
 
 class CommentView(ModelViewSet):
-    queryset = Comment.objects.all()
+    permission_classes = [IsAuthenticated, CommentPermission]
     serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        comments = Comment.objects.filter(issue=self.kwargs["issues_pk"])
+        return comments
