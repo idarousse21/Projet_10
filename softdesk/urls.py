@@ -21,6 +21,7 @@ from users.views import SignupView
 from project.views import ProjectView, ContributorView, IssueView, CommentView
 
 from rest_framework_simplejwt.views import (
+    TokenRefreshView,
     TokenObtainPairView,
 )
 

@@ -5,8 +5,6 @@ from rest_framework.validators import UniqueValidator
 from django.core.validators import MinLengthValidator
 
 
-
-
 class UserSerializer(ModelSerializer):
     username = CharField(
         max_length=25,
@@ -30,10 +28,9 @@ class UserSerializer(ModelSerializer):
         required=True,
         label="Mot de passe",
         validators=[
-            validate_password, 
+            validate_password,
         ],
     )
-    
 
     class Meta:
         model = User
@@ -43,5 +40,9 @@ class UserSerializer(ModelSerializer):
             "first_name",
             "last_name",
             "email",
-            "password", 
+            "password",
         )
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
