@@ -26,6 +26,17 @@
 </ul>
 </p>
 
+<h2 align = "center"> Documentation de l'application </h2>
+<p>
+   Avant de lancer l'application je vous suggère de lire la documentation de l'API:
+<ul>
+    <li>
+        <a href = "https://documenter.getpostman.com/view/23090595/2s8Z75Spn4">Documntation Softdesk API </a>
+    </li>
+</ul>
+
+</p>
+
 <h2 align = "center"> Lancement du code </h2>
 <p>Pour commencer, vous devez lancer l'invite de commande et employer les commandes suivantes:
     <ol>
@@ -44,7 +55,6 @@
                 <ul><li>pip install -r requirements.txt</li></ul>
             <li>Démarrer le serveur django:</li>
                 <ul><li>python manage.py runserver</li></ul>
-           
     </ol>
 
 <h2 align = "center"> Création de compte test </h2>
