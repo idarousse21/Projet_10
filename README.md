@@ -31,7 +31,7 @@
    Avant de lancer l'application je vous suggère de lire la documentation de l'API:
 <ul>
     <li>
-        <a href = "https://documenter.getpostman.com/view/23090595/2s8Z75Spn4">Documntation Softdesk API </a>
+        <a href = "https://documenter.getpostman.com/view/23090595/2s8Z75Spn4">Documentation Softdesk API </a>
     </li>
 </ul>
 
